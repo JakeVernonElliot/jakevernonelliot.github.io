@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+
+  h1 {
+    font-family: Helvetica, sans-serif;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+  }
+
+
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 20px;
+    font-size: 14px;
+  }
+
+  th {
+    text-align: left;
+    font-family: Helvetica, sans-serif;
+  }
+
+  .tableStyling {
+    width: 500px;
+  }
+
+  .inputColumn {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 500px) {
+    .tableStyling {
+      width: 100%;
+    }
+
+  }
+
+  .center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .border-right {
+      border-right: 1px solid black;
+  }
+
+  input {
+    border: none;
+    outline:  0px;
+    border-bottom: 1px dotted dimgrey;
+    text-align: center;
+    width: 50px;
+    height: 30px;
+    padding: -10px;
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input:focus {
+    background-color: ;
+  }
+
+  .header {
+    padding: 30px;
+    text-align: center;
+    background: #184080;
+    color: white;
+    font-size: 30px;
+  }
+
+  .generateButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 200px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+  }
+
+  .generateButton:hover {
+    background-color: green; /* Green */
+  }
+
+  .generateButton:active {
+    box-shadow: 0.5px #666;
+    transform: translateY(1px);
+  }
+
+  .refreshButton {
+    background-color:  #f44336; /* Red */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 200px;
+    margin-left: 10px;
+  }
+
+  .refreshButton:hover {
+    background-color: red; /* Green */
+  }
+
+  .refreshButton:active {
+    box-shadow: 0.5px #666;
+    transform: translateY(1px);
+  }
+
+  .selectButton {
+    background-color:  dimgrey; /* Red */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 90%;
+  }
+
+  .selectButton:hover {
+    background-color: darkgrey; /* Green */
+  }
+
+  .selectButton:active {
+    box-shadow: 0.5px #666;
+    transform: translateY(1px);
+  }
+
+  .tableContent{
+    margin-bottom: 20px;
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+
+  .column {
+    float: left;
+    }
+
+  .left {
+    width: 30%;
+    height: 100%;
+    background-color: #F0F0F0;
+    height: 100%;
+    position: absolute;
+  }
+
+  .right {
+    padding-top: 20px;
+    margin-left: 30%;
+    width: 70%;
+  }
+
+  @media screen and (max-width: 742px) {
+    .column {
+      width: 100%;
+    }
+
+    .left {
+      position: static;
+    }
+
+    .right {
+      margin-left: 0%;
+      }
+  }
+
+  #footer {
+    position: absolute;
+    bottom: 0;
+    background-color: #184080;;
+    width: 100%;
+    height: 50px;            /* Footer height */
+  }
+
+  .ixTable {
+    display: none;
+  }
+
+  .pleaseSelectText {
+    text-align: center;
+    color: grey;
+    font-style: italic;
+    margin-top: 50px;
+  }
+
+</style>
+
+<body>
+
+  <div class="header">
+    <h2>Investigation Results Generator</h2>
+  </div>
+
+  <div class="row">
+    <div class="column left">
+      <h3>Investigation</h3>
+
+      <div style="margin-left: 20px;">
+        <button class="selectButton" type="button" onclick="showSection('vitals')">Vitals</button> <br>
+        <button class="selectButton" type="button" onclick="showSection('biochem')">Serum Biochemistry</button><br>
+        <button class="selectButton" type="button" onclick="showSection('hepBSerology')">Hep B Serology</button><br>
+      </div>
+
+    </div>
+    <div class="column right">
+      <div class ="tableContent">
+      <center>
+          <div id="pleaseSelect">
+            <p class="pleaseSelectText">Select an investigation to begin!</p>
+          </div>
+
+          <div id="biochem" class="ixTable">
+          <table class="tableStyling">
+            <tr>
+              <th>Lab Value</th>
+              <th>Result</th>
+              <th>Normal Range</th>
+            </tr>
+            <tr>
+              <td>Serum Sodium</td>
+              <td id="NaTable" class="inputColumn"><input type="number" id="sodium"></td>
+              <td>135-145 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Serum Potassium</td>
+              <td id="KTable"class="inputColumn"><input type="number" id="potassium"></td>
+              <td>3.5-5.0 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Serum Chlorine</td>
+              <td id="ClTable"class="inputColumn"><input type="number" id="chlorine"></td>
+              <td>95-110 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Serum Bicarb</td>
+              <td id="BiTable"class="inputColumn"><input type="number" id="bicarb"></td>
+              <td>22-32 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Serum Urea</td>
+              <td id="UreaTable"class="inputColumn"><input type="number" id="urea"></td>
+              <td>3.0-8.0 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Serum Creatinine</td>
+              <td id="CrTable"class="inputColumn"><input type="number" id="creatinine"></td>
+              <td>60-120 umol/L</td>
+            </tr>
+            <tr>
+              <td>Serum Calcium</td>
+              <td id="CaTable"class="inputColumn"><input type="number" id="calcium"></td>
+              <td>2.1-2.6 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Serum Phosphate</td>
+              <td id="POTable"class="inputColumn"><input type="number" id="phosphate"></td>
+              <td>0.8-1.5 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Urine Sodium</td>
+              <td id="UNaTable"class="inputColumn"><input type="number" id="urineSodium"></td>
+              <td>20-200 mmol/L</td>
+            </tr>
+            <tr>
+              <td>Urine Osmolality</td>
+              <td id="UOTable"class="inputColumn"><input type="number" id="urineOsmolality"></td>
+              <td>80-800 mOsm/kg</td>
+            </tr>
+            <tr>
+              <td>eGFR</td>
+              <td id="eGFRTable"class="inputColumn"><input type="number" id="eGFR"></td>
+              <td>>90 mL/min/1.73m2</td>
+            </tr>
+          </table> <br>
+          <button type="button" onclick="generateTable('biochem')" class="generateButton">Generate Table</button>
+          <button type="button" onclick="refreshPage()" class="refreshButton">Reload</button>
+          </div>
+
+          <div id="vitals" class="ixTable">
+          <table class="tableStyling">
+            <tr>
+              <th>Lab Value</th>
+              <th>Result</th>
+              <th>Normal Range</th>
+            </tr>
+            <tr>
+              <td>Heart Rate</td>
+              <td id="hrTable" class="inputColumn"><input type="number" id="hr"></td>
+              <td>60-100</td>
+            </tr>
+            <tr>
+              <td>Blood Pressure</td>
+              <td id="BPTable" class="inputColumn"><input type="number" id="sbp">/<input type="number" id="dbp"></td>
+              <td>120/80</td>
+            </tr>
+            <tr>
+              <td>Resp Rate</td>
+              <td id="RespTable"class="inputColumn"><input type="number" id="rr"></td>
+              <td>12-16</td>
+            </tr>
+            <tr>
+              <td>Temperature</td>
+              <td id="tempTable"class="inputColumn"><input type="number" id="temp"></td>
+              <td>36.8-37.2</td>
+            </tr>
+            <tr>
+              <td>Pos Neg</td>
+              <td id="Extra"class="inputColumn"></td>
+              <td>Negative</td>
+            </tr>
+          </table> <br>
+          <button type="button" onclick="generateTable('vitals')" class="generateButton">Generate Table</button>
+          <button type="button" onclick="refreshPage()" class="refreshButton">Reload</button>
+          </div>
+
+        <div id="hepBSerology" class="ixTable">
+          <table class="tableStyling">
+            <tr>
+              <th>Lab Value</th>
+              <th>Result</th>
+            </tr>
+            <tr>
+              <td>HBsAg</td>
+              <td id="HBsAgTable" class="inputColumn"><select name="languages" id="HBsAg">
+                <option value="random">...</option>
+                <option>Positive (+)</option>
+                <option>Negative (-)</option>
+              </select></td>
+            </tr>
+            <tr>
+              <td>Anti-HBs</td>
+              <td id="aHBsTable" class="inputColumn"><select name="languages" id="aHBs">
+                <option value="random">...</option>
+                <option>Positive (+)</option>
+                <option>Negative (-)</option>
+              </select></td>
+            </tr>
+            <tr>
+              <td>Anti-HBc</td>
+              <td id="aHBcTable"class="inputColumn"><select name="languages" id="aHBc">
+                <option value="random">...</option>
+                <option>Positive (+)</option>
+                <option>Negative (-)</option>
+              </select></td>
+            </tr>
+          </table> <br>
+          <button type="button" onclick="generateTable('hepBSerology')" class="generateButton">Generate Table</button>
+          <button type="button" onclick="refreshPage()" class="refreshButton">Reload</button>
+          </div>
+
+        </center>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <p style="color: white; margin-left: 20px; font-size: 10px; margin-top: 20px;">&copy Jake Vernon-Elliot 2022</p>
+  </footer>
+
+</body>
+
+<script>
+
+  function getRnd(min, max, dp) {
+    if (dp == 0) {
+      return ((Math.random() * (max - min + 1)) + min).toFixed(dp)
+    } else {
+      return ((Math.random() * (max - min)) + min).toFixed(dp)
+    }
+   }
+
+  function generateRow(valueName, tableID, min, max, dp){
+    
+    if (document.getElementById(valueName).value.length == 0) {
+      document.getElementById(tableID).innerHTML = getRnd(min, max, dp);
+    } else {
+      document.getElementById(tableID).innerHTML = document.getElementById(valueName).value;
+    }
+
+    }
+  
+  function generateRowBP() {
+
+    if (document.getElementById("sbp").value.length == 0) {
+      var systolic = getRnd(110, 130, 0);
+    } else {
+      var systolic = document.getElementById("sbp").value;
+    }
+
+    if (document.getElementById("dbp").value.length == 0) {
+      var diastolic = getRnd(70, 90, 0);
+    } else {
+      var diastolic = document.getElementById("dbp").value;
+    }
+
+    document.getElementById("BPTable").innerHTML = systolic+"/"+diastolic;
+
+    }
+
+  var posNegArray = ['Positive (+)', 'Negative (-)'];
+  var urineArray = ['Darker', 'Normal', 'Lighter'];
+
+  function generateRowArray(valueName, tableID, arrayName) {
+
+    x = document.getElementById(valueName);
+
+    if (x.value == "random") {
+      var rand = Math.floor(Math.random()*arrayName.length);
+      var rValue = arrayName[rand];
+      document.getElementById(tableID).innerHTML = rValue;
+
+    } else {
+      document.getElementById(tableID).innerHTML = x.options[x.selectedIndex].text;
+  }}
+
+  function generateTable(targetTable){
+
+    if (targetTable == "biochem") {
+      generateRow('sodium', 'NaTable', 135, 145, 0);
+      generateRow('potassium', 'KTable', 3.5, 5, 1);
+      generateRow('chlorine', 'ClTable', 95, 110, 0);
+      generateRow('bicarb', 'BiTable', 22,32,0);
+      generateRow('urea', 'UreaTable', 2,8,1);
+      generateRow('creatinine', 'CrTable',60,120,0);
+      generateRow('calcium', 'CaTable', 2.1,2.6,1);
+      generateRow('phosphate', 'POTable', 0.8,1.5,1);
+      generateRow('urineSodium', 'UNaTable',20,200,0);
+      generateRow('urineOsmolality', 'UOTable',80,800,0);
+      generateRow('eGFR', 'eGFRTable', 89.5,89.5,0);
+    } 
+
+    if (targetTable == "vitals") {
+      generateRow('hr', 'hrTable', 60, 100, 0);
+      generateRowBP();
+      generateRow('rr', 'RespTable', 12, 16, 0);
+      generateRow('temp', 'tempTable', 36.8, 37.2, 1); 
+    } 
+
+    if (targetTable == "hepBSerology") {
+      generateRowArray('HBsAg', 'HBsAgTable', posNegArray);
+      generateRowArray('aHBs', 'aHBsTable', posNegArray);
+      generateRowArray('aHBc', 'aHBcTable', urineArray);
+    }
+
+  }
+
+  function hideTables() {
+    document.getElementById("pleaseSelect").style.display = "none";
+    document.getElementById("vitals").style.display = "none";
+    document.getElementById("biochem").style.display = "none";
+    document.getElementById("hepBSerology").style.display = "none";
+  }
+
+  function showSection(sectionName) {
+    hideTables();
+    document.getElementById(sectionName).style.display = "block";
+  }
+
+  function refreshPage() {
+    window.location.reload()
+  }
+
+</script>
+
+</html>
